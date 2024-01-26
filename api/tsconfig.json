@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": false,
+    // "noFallthroughCasesInSwitch": false,
+    // "strictNullChecks": false,
+    // "noImplicitAny": false,
+    // "strictBindCallApply": false,
+
+    // "lib": ["ESNext"],
+    // "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true,
+    // "module": "NodeNext",
+    // "moduleResolution": "NodeNext",
+    // "removeComments": true,
+    // "esModuleInterop": true,
+    // "forceConsistentCasingInFileNames": true,
+    // "strict": true,
+    // "skipLibCheck": true,
+    // "baseUrl": ".",
+    "resolveJsonModule": true,
+    "paths": {
+      "@alkweloapp/common": ["src/Common/index"],
+      "src": ["src/*"],
+      "Common": ["src/Common/index"],
+      "User/*": ["src/User/*"],
+      "Location/*": ["src/Location/*"],
+      "Notification/*": ["./Notification/*"],
+      "Payment/*": ["./Payment/*"],
+      "Helpers/*": ["./src/Modules/Helpers/*"],
+      "Helpers": ["./src/Modules/Helpers/index"],
+      "Services/*": ["./src/Services/*"]
+    }
+  }
+}

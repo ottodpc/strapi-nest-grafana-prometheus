@@ -1,0 +1,30 @@
+nodes_modules
+.github
+dist/
+docs/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+.idea
+# macOS
+.DS_Store
+
+# WEB PUSH PWA
+**/public/workbox-*.js
+**/public/sw.js
+**/public/worker-*.js
+
+build/
+.next
+yarn-error.log
+.idea
+# macOS
+.DS_Store
+.git
+.gitignore

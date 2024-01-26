@@ -1,0 +1,75 @@
+version: "3"
+services:
+  database:
+    image: postgis/postgis
+    environment:
+      POSTGRES_USER: "STRAPI"
+      POSTGRES_PASSWORD: "STRAPI"
+      POSTGRES_DB: "STRAPI"
+    ports:
+      - "5432:5432"
+    restart: always
+
+  cache:
+    image: redis:6
+    ports:
+      - "6379:6379"
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+  strapi:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_NAME: STRAPI
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: STRAPI
+      DATABASE_PASSWORD: STRAPI
+
+    volumes:
+      - ./volumes/app:/srv/app
+    ports:
+      - "1337:1337"
+    depends_on:
+      - postgres
+
+  # prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    volumes:
+      - ./volumes/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./volumes/prometheus:/etc/prometheus
+      - ./volumes/prom_data:/prometheus
+    depends_on:
+      - api
+      - strapi
+
+  # grafana: https://grafana.com/grafana/dashboards/
+  # https://grafana.com/grafana/dashboards/11159-nodejs-application-dashboard/
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: unless-stopped
+    ports:
+      - "9091:3000"
+    volumes:
+      - ./volumesgrafana:/var/lib/grafana
+    depends_on:
+      - api
