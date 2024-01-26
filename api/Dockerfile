@@ -3,7 +3,10 @@ FROM node:20-alpine3.18
 WORKDIR /usr/src/app
 
 COPY package.json .
+
 RUN npm install --only=production 
+RUN npm i -D @swc/cli @swc/core
+RUN npm i -g @nestjs/cli
 
 COPY . .
 RUN npm run build

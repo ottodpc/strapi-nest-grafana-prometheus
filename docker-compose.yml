@@ -24,7 +24,7 @@ services:
 
   strapi:
     build:
-      context: ./api
+      context: ./strapi
       dockerfile: Dockerfile
     environment:
       DATABASE_CLIENT: postgres
@@ -33,13 +33,12 @@ services:
       DATABASE_PORT: 5432
       DATABASE_USERNAME: STRAPI
       DATABASE_PASSWORD: STRAPI
-
     volumes:
       - ./volumes/app:/srv/app
     ports:
       - "1337:1337"
     depends_on:
-      - postgres
+      - database
 
   # prometheus
   prometheus:
@@ -57,7 +56,7 @@ services:
       - ./volumes/prom_data:/prometheus
     depends_on:
       - api
-      - strapi
+      # - strapi
 
   # grafana: https://grafana.com/grafana/dashboards/
   # https://grafana.com/grafana/dashboards/11159-nodejs-application-dashboard/
